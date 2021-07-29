@@ -7,7 +7,6 @@ public class Circle implements Drawable {
         System.out.println("drawing circle");
     }
 
-    @Override
     public void print() {
 
     }
