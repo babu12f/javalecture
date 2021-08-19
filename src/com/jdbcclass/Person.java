@@ -1,14 +1,21 @@
 package com.jdbcclass;
 
-public class PersonInfo {
+public class Person {
     private int id;
     private String name;
     private int age;
     private String address;
     private String email;
 
-    public PersonInfo(int id, String name, int age, String address, String email) {
+    public Person(int id, String name, int age, String address, String email) {
         this.id = id;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.email = email;
+    }
+
+    public Person(String name, int age, String address, String email) {
         this.name = name;
         this.age = age;
         this.address = address;
@@ -55,9 +62,14 @@ public class PersonInfo {
         this.email = email;
     }
 
-    public void print() {
-        String formatPersonString = "Person info Of : { id: " + id +
-                ", name: "+ name + ", age: " + age + ", address: "+ address + ", email: "+ email+ " }";
-        System.out.println(formatPersonString);
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
