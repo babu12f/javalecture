@@ -17,7 +17,7 @@ public class PersonListController {
     List<Person> tableDataList = new ArrayList<>();
 
     @FXML
-    TableView tableView;
+    TableView<Person> tableView;
     @FXML
     TableColumn<Person, Integer> columnId;
     @FXML
@@ -47,6 +47,13 @@ public class PersonListController {
         List<Person> allPerson = personRepository.findAllPerson();
 
         tableView.getItems().addAll(allPerson);
+    }
+
+    @FXML
+    private void getSelectedRow() {
+        Person person = tableView.getSelectionModel().getSelectedItem();
+
+        System.out.println(person);
     }
 
 }

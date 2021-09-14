@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -11,6 +12,11 @@ import java.io.IOException;
 
 public class MainWindowController {
 
+    @FXML
+    Button btnEdit;
+
+    @FXML
+    Button btnDelete;
 
     @FXML
     public void showPersonList() throws IOException {
@@ -38,5 +44,13 @@ public class MainWindowController {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    @FXML
+    private void clickSearch(){
+
+
+        btnEdit.setDisable(false);
+        btnDelete.setDisable(false);
     }
 }

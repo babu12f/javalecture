@@ -69,11 +69,13 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: green;">
                            <children>
                               <TextField layoutX="20.0" layoutY="25.0" prefHeight="36.0" prefWidth="212.0" promptText="Enter person ID" />
-                              <Button layoutX="276.0" layoutY="24.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="72.0" text="Search" />
+                              <Button layoutX="276.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickSearch" prefHeight="39.0" prefWidth="72.0" text="Search" />
                               <Label layoutX="40.0" layoutY="102.0" prefHeight="17.0" prefWidth="83.0" text="name" />
                               <Label layoutX="173.0" layoutY="102.0" prefHeight="17.0" prefWidth="318.0" text=" ...." />
                               <Label layoutX="40.0" layoutY="138.0" prefHeight="17.0" prefWidth="83.0" text="Age" />
                               <Label layoutX="180.0" layoutY="138.0" prefHeight="17.0" prefWidth="318.0" text=" ...." />
+                              <Button fx:id="btnEdit" disable="true" layoutX="22.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Edit" />
+                              <Button fx:id="btnDelete" disable="true" layoutX="213.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Delete" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
