@@ -11,6 +11,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -68,20 +71,67 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: green;">
                            <children>
-                              <TextField layoutX="20.0" layoutY="25.0" prefHeight="36.0" prefWidth="212.0" promptText="Enter person ID" />
+                              <TextField fx:id="txtSearchId" layoutX="20.0" layoutY="25.0" prefHeight="36.0" prefWidth="212.0" promptText="Enter person ID" />
                               <Button layoutX="276.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickSearch" prefHeight="39.0" prefWidth="72.0" text="Search" />
-                              <Label layoutX="40.0" layoutY="102.0" prefHeight="17.0" prefWidth="83.0" text="name" />
-                              <Label layoutX="173.0" layoutY="102.0" prefHeight="17.0" prefWidth="318.0" text=" ...." />
-                              <Label layoutX="40.0" layoutY="138.0" prefHeight="17.0" prefWidth="83.0" text="Age" />
-                              <Label layoutX="180.0" layoutY="138.0" prefHeight="17.0" prefWidth="318.0" text=" ...." />
-                              <Button fx:id="btnEdit" disable="true" layoutX="22.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Edit" />
-                              <Button fx:id="btnDelete" disable="true" layoutX="213.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Delete" />
-                           </children></AnchorPane>
+                              <Button fx:id="btnEdit" disable="true" layoutX="37.0" layoutY="390.0" mnemonicParsing="false" onAction="#editBtnClick" prefHeight="25.0" prefWidth="90.0" text="Edit" />
+                              <Button fx:id="btnDelete" disable="true" layoutX="249.0" layoutY="390.0" mnemonicParsing="false" onAction="#deletePersonBtnClick" prefHeight="25.0" prefWidth="102.0" text="Delete" />
+                              <GridPane layoutX="37.0" layoutY="91.0" prefHeight="198.0" prefWidth="458.0" style="-fx-border-color: green; -fx-border-width: 2px;">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="10.0" prefWidth="138.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label fx:id="lblName" prefHeight="17.0" prefWidth="318.0" text=".." GridPane.columnIndex="1" />
+                                    <Label prefHeight="17.0" prefWidth="83.0" text="Address" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="83.0" text="Email" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="83.0" text="Name">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="83.0" text="ID" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Age" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label fx:id="lblAge" prefHeight="17.0" prefWidth="318.0" text=".." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="lblId" prefHeight="17.0" prefWidth="243.0" text="..." GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="lblAddress" prefHeight="17.0" prefWidth="217.0" text="...." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="lblEmail" prefHeight="17.0" prefWidth="247.0" text="..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding></AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab text="Other Forms">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: green;" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: green;">
+                           <children>
+                              <BorderPane fx:id="containerTabRoot" layoutX="83.0" layoutY="94.0" prefHeight="450.0" prefWidth="599.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
                   </content>
                 </Tab>
               </tabs>

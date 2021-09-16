@@ -1,4 +1,4 @@
-package com.project.addperson;
+package com.project.editperson;
 
 import com.project.db.PersonRepository;
 import com.project.models.Person;
@@ -8,9 +8,11 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class AddPersonController {
+public class EditPersonController {
 
     PersonRepository personRepository = new PersonRepository();
+
+    Person person = null;
 
     @FXML
     AnchorPane anchorPane;
@@ -23,6 +25,8 @@ public class AddPersonController {
     public TextField tfAddress;
     @FXML
     public TextField tfEmail;
+    @FXML
+    public TextField tfId;
 
     @FXML
     public void btnClickSavePerson(Event event) throws Exception {
@@ -31,13 +35,25 @@ public class AddPersonController {
         String address = tfAddress.getText();
         String email = tfEmail.getText();
 
-        Person person = new Person(name, age, address, email);
+        person.setName(name);
+        person.setAge(age);
+        person.setAddress(address);
+        person.setEmail(email);
 
-        personRepository.save(person);
+        personRepository.update(person);
 
         clearForm();
 
-        ///((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    public void fillPersonEditForm(Person person) {
+        this.person = person;
+        tfFirstName.setText(person.getName());
+        tfAge.setText(String.valueOf(person.getAge()));
+        tfAddress.setText(person.getAddress());
+        tfEmail.setText(person.getEmail());
+        tfId.setText(String.valueOf(person.getId()));
     }
 
     @FXML

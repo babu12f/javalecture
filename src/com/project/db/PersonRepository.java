@@ -114,9 +114,9 @@ public class PersonRepository {
 
             ResultSet resultSet = prepStatement.executeQuery();
 
-            resultSet.next();
-
-            person = extractPersonFromResultSet(resultSet);
+            if(resultSet.next()) {
+                person = extractPersonFromResultSet(resultSet);
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
