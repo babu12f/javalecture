@@ -4,11 +4,17 @@ import com.project.db.PersonRepository;
 import com.project.models.Person;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 
-public class AddPersonController {
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+
+public class AddPersonController implements Initializable {
 
     PersonRepository personRepository = new PersonRepository();
 
@@ -50,5 +56,26 @@ public class AddPersonController {
         tfAge.setText("");
         tfAddress.setText("");
         tfEmail.setText("");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initEvent();
+    }
+
+    private void initEvent() {
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            System.out.println(text);
+
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+
+            return null;
+        };
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        tfAge.setTextFormatter(textFormatter);
     }
 }

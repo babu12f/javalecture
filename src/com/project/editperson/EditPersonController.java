@@ -5,6 +5,7 @@ import com.project.models.Person;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -43,6 +44,13 @@ public class EditPersonController {
         personRepository.update(person);
 
         clearForm();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setHeaderText(null);
+        alert.setContentText("Edit person Successful :)");
+
+        alert.showAndWait();
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
