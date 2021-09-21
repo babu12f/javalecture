@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class PersonListController {
 
@@ -83,11 +84,22 @@ public class PersonListController {
 
             controller.fillPersonEditForm(person);
 
+            /*controller.getCurPerson().addListener((obs, old, ne) -> {
+                if (ne != null) {
+                    loadData();
+                }
+            });*/
+
+            Consumer<Person> personSelectCallback = (p) -> {
+                System.out.println(p);
+            };
+
+            controller.setPersonSelectCallback(personSelectCallback);
+
             stage.setScene(scene);
             stage.setTitle("Person Edit form");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            loadData();
+            stage.show();
         }
 
     }

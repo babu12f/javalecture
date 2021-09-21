@@ -2,6 +2,8 @@ package com.project.editperson;
 
 import com.project.db.PersonRepository;
 import com.project.models.Person;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -9,11 +11,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
 public class EditPersonController {
 
     PersonRepository personRepository = new PersonRepository();
 
     Person person = null;
+
+    /*private final ReadOnlyObjectWrapper<Person> curPerson = new ReadOnlyObjectWrapper<>();
+
+    public ReadOnlyObjectProperty<Person> getCurPerson() {
+        return curPerson;
+    }*/
+
+    private Consumer<Person> personSelectCallback;
+
+    public void setPersonSelectCallback(Consumer<Person> callback) {
+        this.personSelectCallback = callback ;
+    }
 
     @FXML
     AnchorPane anchorPane;
@@ -43,7 +60,12 @@ public class EditPersonController {
 
         personRepository.update(person);
 
-        clearForm();
+        /*curPerson.set(null);
+        curPerson.set(person);*/
+
+        personSelectCallback.accept(person);
+
+        ///clearForm();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
@@ -52,7 +74,7 @@ public class EditPersonController {
 
         alert.showAndWait();
 
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        //((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     public void fillPersonEditForm(Person person) {
