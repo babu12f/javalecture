@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonRepository {
-    private DBConnection dbConnection = new DBConnection();
+    private ApplicationDbConnection dbConnection;
+
+    public PersonRepository() {
+        dbConnection = DBConnection.getDbConnection();
+    }
 
     public void save(Person person) {
         String query = "INSERT INTO person_info (" +
