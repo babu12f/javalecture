@@ -3,8 +3,10 @@ package com.project.main;
 import com.project.db.PersonRepository;
 import com.project.editperson.EditPersonController;
 import com.project.models.Person;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +24,10 @@ import java.io.StringWriter;
 import java.util.Optional;
 
 public class MainWindowController {
+
+    private static final String TAB_PERSON_ADD = "1";
+    private static final String TAB_PERSON_LIST = "2";
+    private static final String TAB_PERSON_EDIT = "3";
 
     private PersonRepository personRepository = new PersonRepository();
     private Person person = null;
@@ -47,33 +53,58 @@ public class MainWindowController {
     TextField txtSearchId;
 
     @FXML
+    private TabPane mainTab;
+
+    @FXML
     public void showPersonList() throws IOException {
-        //Stage stage = new Stage();
+        Node node = FXMLLoader.load(getClass().getResource("../personlist/person_list.fxml"));
+        Tab tab = null;
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../personlist/person_list.fxml"));
-
-        containerTabRoot.setCenter(parent);
-
-        //Scene scene = new Scene(parent);
-        /*stage.setTitle("Person List");
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();*/
+        if (!isTabAlreadyPresent(TAB_PERSON_LIST)) {
+            tab = new Tab("List of Person", node);
+            tab.setId(TAB_PERSON_LIST);
+            mainTab.getTabs().add(tab);
+        }
+        else {
+            tab = getTabById(TAB_PERSON_LIST);
+        }
+        mainTab.getSelectionModel().select(tab);
     }
 
     @FXML
     public void showAddPerson() throws IOException {
-        //Stage stage = new Stage();
+        Node node = FXMLLoader.load(getClass().getResource("../addperson/add_person.fxml"));
+        Tab tab = null;
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../addperson/add_person.fxml"));
+        if (!isTabAlreadyPresent(TAB_PERSON_ADD)) {
+            tab = new Tab("Add Person", node);
+            tab.setId(TAB_PERSON_ADD);
+            mainTab.getTabs().add(tab);
+        }
+        else {
+            tab = getTabById(TAB_PERSON_ADD);
+        }
 
-        containerTabRoot.setCenter(parent);
-       /* Scene scene = new Scene(parent);
+        mainTab.getSelectionModel().select(tab);
+    }
 
-        stage.setTitle("Add Person");
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();*/
+    private boolean isTabAlreadyPresent(String tabId) {
+       if (getTabById(tabId) != null) {
+           return true;
+       }
+       return false;
+    }
+
+    private Tab getTabById(String tabId) {
+        ObservableList<Tab> tabs = mainTab.getTabs();
+
+        for (Tab t : tabs) {
+            if(t.getId().equals(tabId)){
+                return t;
+            }
+        }
+
+        return null;
     }
 
     @FXML
@@ -101,16 +132,23 @@ public class MainWindowController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../editperson/edit_person.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load());
+        Node node = fxmlLoader.load();
 
         EditPersonController controller = fxmlLoader.getController();
 
         controller.fillPersonEditForm(this.person);
 
-        stage.setTitle("Edit Person");
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        Tab tab = null;
+        if (!isTabAlreadyPresent(TAB_PERSON_EDIT)) {
+            tab = new Tab("Edit Person", node);
+            tab.setId(TAB_PERSON_EDIT);
+            mainTab.getTabs().add(tab);
+        }
+        else {
+            tab = getTabById(TAB_PERSON_EDIT);
+        }
+
+        mainTab.getSelectionModel().select(tab);
     }
 
     @FXML
