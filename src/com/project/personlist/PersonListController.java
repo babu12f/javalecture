@@ -41,6 +41,12 @@ public class PersonListController {
     @FXML
     ContextMenu tableContextMenu;
 
+    private Consumer<Person> personSelectCallback;
+
+    public void setPersonSelectCallback(Consumer<Person> callback) {
+        this.personSelectCallback = callback ;
+    }
+
     @FXML
     private void initialize() {
         initTableColumns();
@@ -74,32 +80,7 @@ public class PersonListController {
         Person person = tableView.getSelectionModel().getSelectedItem();
 
         if (person != null) {
-            Stage stage = new Stage();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../editperson/edit_person.fxml"));
-
-            Scene scene = new Scene(fxmlLoader.load());
-
-            EditPersonController controller = fxmlLoader.getController();
-
-            controller.fillPersonEditForm(person);
-
-            /*controller.getCurPerson().addListener((obs, old, ne) -> {
-                if (ne != null) {
-                    loadData();
-                }
-            });*/
-
-            Consumer<Person> personSelectCallback = (p) -> {
-                System.out.println(p);
-            };
-
-            controller.setPersonSelectCallback(personSelectCallback);
-
-            stage.setScene(scene);
-            stage.setTitle("Person Edit form");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+           personSelectCallback.accept(person);
         }
 
     }
@@ -133,6 +114,11 @@ public class PersonListController {
         else {
             System.out.println("click cancel");
         }
+    }
+
+    @FXML
+    private void clickOnRefreshCM() {
+        loadData();
     }
 
 }

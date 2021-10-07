@@ -1,6 +1,7 @@
 package com.project.editperson;
 
 import com.project.db.PersonRepository;
+import com.project.functionalinterfaces.MyApplicationCallback;
 import com.project.models.Person;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -26,10 +27,10 @@ public class EditPersonController {
         return curPerson;
     }*/
 
-    private Consumer<Person> personSelectCallback;
+    private MyApplicationCallback personEditCompleteCallback;
 
-    public void setPersonSelectCallback(Consumer<Person> callback) {
-        this.personSelectCallback = callback ;
+    public void setPersonEditCompleteCallback(MyApplicationCallback callback) {
+        this.personEditCompleteCallback = callback ;
     }
 
     @FXML
@@ -63,7 +64,7 @@ public class EditPersonController {
         /*curPerson.set(null);
         curPerson.set(person);*/
 
-        personSelectCallback.accept(person);
+        //personSelectCallback.accept(person);
 
         ///clearForm();
 
@@ -73,6 +74,8 @@ public class EditPersonController {
         alert.setContentText("Edit person Successful :)");
 
         alert.showAndWait();
+
+        personEditCompleteCallback.taskComplete();
 
         //((Node)(event.getSource())).getScene().getWindow().hide();
     }

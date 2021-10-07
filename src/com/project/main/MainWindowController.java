@@ -3,6 +3,7 @@ package com.project.main;
 import com.project.db.PersonRepository;
 import com.project.editperson.EditPersonController;
 import com.project.models.Person;
+import com.project.personlist.PersonListController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,9 +58,21 @@ public class MainWindowController {
 
     @FXML
     public void showPersonList() throws IOException {
-        Node node = FXMLLoader.load(getClass().getResource("../personlist/person_list.fxml"));
-        Tab tab = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../personlist/person_list.fxml"));
 
+        Node node = loader.load();
+
+        PersonListController controller = loader.getController();
+
+        controller.setPersonSelectCallback((p)-> {
+            try {
+                showEditPersonTab(p);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Tab tab = null;
         if (!isTabAlreadyPresent(TAB_PERSON_LIST)) {
             tab = new Tab("List of Person", node);
             tab.setId(TAB_PERSON_LIST);
@@ -86,6 +99,37 @@ public class MainWindowController {
         }
 
         mainTab.getSelectionModel().select(tab);
+    }
+
+    private void showEditPersonTab(Person person) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../editperson/edit_person.fxml"));
+
+        Node node = fxmlLoader.load();
+
+        EditPersonController controller = fxmlLoader.getController();
+
+        controller.fillPersonEditForm(person);
+
+        Tab tab = null;
+
+        if (!isTabAlreadyPresent(TAB_PERSON_EDIT)) {
+            tab = new Tab("Add Person", node);
+            tab.setId(TAB_PERSON_EDIT);
+            mainTab.getTabs().add(tab);
+        }
+        else {
+            tab = getTabById(TAB_PERSON_EDIT);
+            tab.setContent(node);
+        }
+
+        mainTab.getSelectionModel().select(tab);
+
+        controller.setPersonEditCompleteCallback(() -> closeEditPersonTab());
+    }
+
+    private void closeEditPersonTab() {
+        Tab editTab = getTabById(TAB_PERSON_EDIT);
+        mainTab.getTabs().remove(editTab);
     }
 
     private boolean isTabAlreadyPresent(String tabId) {
