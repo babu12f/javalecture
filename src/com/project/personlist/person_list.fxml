@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.ProgressIndicator?>
 <AnchorPane prefHeight="494.0" prefWidth="729.0" style="-fx-border-color: green; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.personlist.PersonListController">
    <children>
       <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="431.0" prefWidth="703.0">
@@ -28,5 +29,6 @@
          </contextMenu>
       </TableView>
       <Button layoutX="14.0" layoutY="455.0" mnemonicParsing="false" onAction="#getSelectedRow" text="get selected row" />
+       <ProgressIndicator fx:id="progressIndicator" layoutX="334.0" layoutY="221.0" />
    </children>
 </AnchorPane>

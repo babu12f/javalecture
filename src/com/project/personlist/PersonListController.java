@@ -3,7 +3,10 @@ package com.project.personlist;
 import com.project.db.PersonRepository;
 import com.project.editperson.EditPersonController;
 import com.project.models.Person;
+import com.project.services.PersonService;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +25,7 @@ import java.util.function.Consumer;
 public class PersonListController {
 
     PersonRepository personRepository = new PersonRepository();
+    final PersonService personService = new PersonService();
 
     List<Person> tableDataList = new ArrayList<>();
 
@@ -41,6 +45,9 @@ public class PersonListController {
     @FXML
     ContextMenu tableContextMenu;
 
+    @FXML
+    ProgressIndicator progressIndicator;
+
     private Consumer<Person> personSelectCallback;
 
     public void setPersonSelectCallback(Consumer<Person> callback) {
@@ -50,7 +57,27 @@ public class PersonListController {
     @FXML
     private void initialize() {
         initTableColumns();
-        loadData();
+
+        progressIndicator.visibleProperty().bind(personService.runningProperty());
+
+        personService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent workerStateEvent) {
+                System.out.println("success");
+                List<Person> personList = personService.getValue();
+                tableView.getItems().clear();
+                tableView.getItems().addAll(personList);
+            }
+        });
+
+        personService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent workerStateEvent) {
+                //DO stuff on failed
+                System.out.println("failed");
+            }
+        });
+        personService.start();
     }
 
     public void initTableColumns() {
@@ -62,10 +89,22 @@ public class PersonListController {
     }
 
     private void loadData() {
-        List<Person> allPerson = personRepository.findAllPerson();
 
-        tableView.getItems().clear();
-        tableView.getItems().addAll(allPerson);
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(1000 * 60 * 1);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            List<Person> allPerson = personRepository.findAllPerson();
+
+            tableView.getItems().clear();
+            tableView.getItems().addAll(allPerson);
+
+        }).start();
     }
 
     @FXML
@@ -118,7 +157,8 @@ public class PersonListController {
 
     @FXML
     private void clickOnRefreshCM() {
-        loadData();
+        //loadData();
+        personService.restart();
     }
 
 }
